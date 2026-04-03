@@ -45,7 +45,6 @@ client.on('messageCreate', async (message) => {
   if (command === '!skip') {
     player.stop();
   }
-});
 
 async function playNext() {
   if (!queue.length) return;
