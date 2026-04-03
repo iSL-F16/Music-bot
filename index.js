@@ -11,7 +11,6 @@ const client = new Client({
   ]
 });
 
-// قراءة التوكن من Secrets
 const TOKEN = process.env.TOKEN;
 
 let queue = [];
@@ -38,7 +37,7 @@ client.on('messageCreate', async (message) => {
     });
 
     queue.push(query);
-    message.reply(`Added: ${query}`); // تصحيح علامة التنصيص هنا
+    message.reply(`Added: ${query}`);
 
     if (queue.length === 1) playNext();
   }
@@ -46,10 +45,11 @@ client.on('messageCreate', async (message) => {
   if (command === '!skip') {
     player.stop();
   }
-}); // إغلاق قوس الحدث هنا
+});
 
 async function playNext() {
   if (!queue.length) return;
+
   const song = queue[0];
 
   try {
@@ -62,7 +62,10 @@ async function playNext() {
       stream = await play.stream(res[0].url);
     }
 
-    const resource = createAudioResource(stream.stream, { inputType: stream.type });
+    const resource = createAudioResource(stream.stream, {
+      inputType: stream.type
+    });
+
     player.play(resource);
     connection.subscribe(player);
 
@@ -70,8 +73,8 @@ async function playNext() {
       queue.shift();
       playNext();
     });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     queue.shift();
     playNext();
   }
