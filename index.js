@@ -37,7 +37,8 @@ client.on('messageCreate', async (message) => {
     });
 
     queue.push(query);
-    message.reply(`Added: ${query});
+    // تصحيح علامات التنصيص هنا
+    message.reply(`Added: ${query}`);
 
     if (queue.length === 1) playNext();
   }
@@ -45,32 +46,39 @@ client.on('messageCreate', async (message) => {
   if (command === '!skip') {
     player.stop();
   }
+}); // إغلاق حدث messageCreate بشكل صحيح هنا
 
 async function playNext() {
   if (!queue.length) return;
 
   const song = queue[0];
 
-  let stream;
-  if (play.yt_validate(song) === 'video') {
-    stream = await play.stream(song);
-  } else {
-    const res = await play.search(song, { limit: 1 });
-    stream = await play.stream(res[0].url);
-  }
+  try {
+    let stream;
+    if (play.yt_validate(song) === 'video') {
+      stream = await play.stream(song);
+    } else {
+      const res = await play.search(song, { limit: 1 });
+      if (!res.length) return; 
+      stream = await play.stream(res[0].url);
+    }
 
-  const resource = createAudioResource(stream.stream, {
-    inputType: stream.type
-  });
+    const resource = createAudioResource(stream.stream, {
+      inputType: stream.type
+    });
 
-  player.play(resource);
-  connection.subscribe(player);
+    player.play(resource);
+    connection.subscribe(player);
 
-  player.once(AudioPlayerStatus.Idle, () => {
+    player.once(AudioPlayerStatus.Idle, () => {
+      queue.shift();
+      playNext();
+    });
+  } catch (error) {
+    console.error(error);
     queue.shift();
     playNext();
-  });
+  }
 }
 
 client.login(TOKEN);
-});
