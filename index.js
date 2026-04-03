@@ -37,7 +37,7 @@ client.on('messageCreate', async (message) => {
     });
 
     queue.push(query);
-    message.reply(Added: ${query});
+    message.reply('Added: ${query});
 
     if (queue.length === 1) playNext();
   }
