@@ -37,7 +37,6 @@ client.on('messageCreate', async (message) => {
     });
 
     queue.push(query);
-    // تصحيح علامات التنصيص هنا
     message.reply(`Added: ${query}`);
 
     if (queue.length === 1) playNext();
@@ -46,7 +45,7 @@ client.on('messageCreate', async (message) => {
   if (command === '!skip') {
     player.stop();
   }
-}); // إغلاق حدث messageCreate بشكل صحيح هنا
+});
 
 async function playNext() {
   if (!queue.length) return;
@@ -59,7 +58,7 @@ async function playNext() {
       stream = await play.stream(song);
     } else {
       const res = await play.search(song, { limit: 1 });
-      if (!res.length) return; 
+      if (!res.length) return;
       stream = await play.stream(res[0].url);
     }
 
