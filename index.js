@@ -80,4 +80,5 @@ async function playNext() {
   }
 }
 
-client.login(TOKEN);
+client.login(MTQ4OTUwMTg4MjM1MDMwNTQxMg.GnjzDt.ndWVkqp7zHZyw8hhF8wsTsSPl18aQMAEJIyFo4
+);
