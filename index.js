@@ -80,5 +80,5 @@ async function playNext() {
   }
 }
 
-client.login(MTQ4OTUwMTg4MjM1MDMwNTQxMg.GnjzDt.ndWVkqp7zHZyw8hhF8wsTsSPl18aQMAEJIyFo4
+client.login(`MTQ4OTUwMTg4MjM1MDMwNTQxMg.GnjzDt.ndWVkqp7zHZyw8hhF8wsTsSPl18aQMAEJIyFo4`
 );
