@@ -80,5 +80,4 @@ async function playNext() {
   }
 }
 
-client.login(``
-);
+client.login(TOKEN);
